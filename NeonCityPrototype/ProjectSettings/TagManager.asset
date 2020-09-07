@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - Spotted Effect
+  - Door Slot
+  - Door
+  - HorizontalSpawner
+  - BuildingTemplate
+  - StairsDown
+  - StairsUp
+  - HidingSpot
+  - HidingSpotSlot
+  - Objective
+  - Hide Node
+  - HideNode
+  - Locked Door
+  - Terminal
+  - Security Camera
+  - Security Element
+  - Turret
+  - Selector
+  - Chip
+  - Wire Node
+  - Wire Number
+  - Wire Fodder
+  - TerminalSlot
+  - Hacking Overlay
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - player
+  - BlocksVision
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1541346791
+    locked: 0
+  - name: Building Templates
+    uniqueID: 3832385025
+    locked: 0
+  - name: Doors
+    uniqueID: 57440507
+    locked: 0
+  - name: player
+    uniqueID: 2859784389
+    locked: 0
+  - name: minigames
+    uniqueID: 3759322105
+    locked: 0
+  - name: Effects and UI
+    uniqueID: 3047691315
+    locked: 0
+  - name: Text
+    uniqueID: 191922865
+    locked: 0
