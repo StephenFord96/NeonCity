@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followTarget: {fileID: 0}
   player: {fileID: 0}
-  crosshairBlue: {fileID: 2493412242135085068, guid: 9548bfee7c8262e4bb2e46c20a4dd1c8,
+  crosshairBlue: {fileID: 8167572103711367641, guid: 6febc75553eb85f42b37d754bc4f6754,
     type: 3}
   glitchEffect: {fileID: 4942124264979357457, guid: 4780e4ef19d73b4438cf9c1023b2c627,
     type: 3}

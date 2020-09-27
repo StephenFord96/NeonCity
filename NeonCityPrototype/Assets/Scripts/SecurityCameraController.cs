@@ -9,6 +9,8 @@ public class SecurityCameraController : MonoBehaviour
     public bool hasPower;
     private Animator camAnim;
     private LevelGenerator nexus;
+    private bool captured;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +18,7 @@ public class SecurityCameraController : MonoBehaviour
         camAnim = GetComponent<Animator>();
         //assignedToTerminal = false;
         nexus = FindObjectOfType<LevelGenerator>();
+        captured = false;
 
     }
 
@@ -28,11 +31,17 @@ public class SecurityCameraController : MonoBehaviour
     public void CaptureCamera()
     {
         camAnim.SetBool("Captured", true);
+        captured = true;
+        
+        
     }
 
     public void raiseAlarm()
     {
-        Debug.Log("Camera Sighted Player");
-        nexus.guardsAlert();
+        if (captured == false)
+        {
+            Debug.Log("Camera Sighted Player");
+            nexus.guardsAlert();
+        }
     }
 }

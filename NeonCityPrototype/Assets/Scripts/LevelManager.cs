@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-
+    private CameraController playerCamera;
     private int travelling;
+    public int missionGoal;
+    public bool playerLiving;
+    public GameObject gameOver;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -14,12 +18,18 @@ public class LevelManager : MonoBehaviour
 
         travelling = 1;
         DontDestroyOnLoad(gameObject);
+        playerLiving = true;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (playerLiving == false)
+        {
+            StartCoroutine("missionFailed");
+        }
     }
 
 
@@ -36,5 +46,17 @@ public class LevelManager : MonoBehaviour
         }
 
 
+    }
+
+    IEnumerator missionFailed()
+    {
+        playerCamera = FindObjectOfType<CameraController>();
+        GameObject gOver = Instantiate(gameOver, new Vector3(0f, 0f, 0f), transform.rotation);
+        playerCamera.gameOver(gOver);
+
+        yield return new WaitForSeconds(3f);
+        playerLiving = true;
+        SceneManager.LoadScene("BarHideOut");
+        travelling = 1;
     }
 }

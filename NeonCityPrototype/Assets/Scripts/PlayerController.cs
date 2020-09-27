@@ -385,6 +385,9 @@ public class PlayerController : MonoBehaviour
             {
                 Instantiate(hideNode, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z), transform.rotation);
                 playerHidden = true;
+
+                gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                
             }
 
         }
@@ -396,6 +399,9 @@ public class PlayerController : MonoBehaviour
             playerHiddenLeft = false;
             playerHiddenRight = false;
             playerHidden = false;
+
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            
 
         }
                      

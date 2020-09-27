@@ -42,9 +42,18 @@ public class CameraController : MonoBehaviour
         }
 
         followTarget = newTarget;
+
         GameObject c = Instantiate(crosshairBlue, new Vector3(newTarget.gameObject.transform.position.x, newTarget.gameObject.transform.position.y, newTarget.gameObject.transform.position.z), transform.rotation);
         currentCrossHair = c;
+
         GameObject g = Instantiate(glitchEffect, new Vector3(newTarget.gameObject.transform.position.x, newTarget.gameObject.transform.position.y, newTarget.gameObject.transform.position.z), transform.rotation);
         Destroy(g.gameObject, 0.33f);
+
+        
+    }
+
+    public void gameOver(GameObject newTarget)
+    {
+        followTarget = newTarget;
     }
 }

@@ -8,6 +8,7 @@ public class TurretController : MonoBehaviour
     public bool assignedToTerminal;
     public bool hasPower;
     private Animator turretAnim;
+    public bool captured;
 
 
 
@@ -15,6 +16,7 @@ public class TurretController : MonoBehaviour
     void Start()
     {
         turretAnim = GetComponent<Animator>();
+        captured = false;
         
         
     }
@@ -29,5 +31,7 @@ public class TurretController : MonoBehaviour
     public void CaptureCamera()
     {
         turretAnim.SetBool("Captured", true);
+        captured = true;
+        GetComponentInChildren<MuzzleFlashController>(captured).Equals(true);
     }
 }

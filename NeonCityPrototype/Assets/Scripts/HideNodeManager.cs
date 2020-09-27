@@ -16,9 +16,12 @@ public class HideNodeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+   
+
         player = FindObjectOfType<PlayerController>();
 
-        if (player.playerHidden == false)
+
+        if (player.playerHidden == false || player == null)
         {
             Destroy(gameObject, 0f);
         }

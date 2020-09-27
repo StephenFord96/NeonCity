@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
 
 
     private LevelGenerator callNexus;
+    private LevelManager callMiniNexus;
     public int enemyGridLocationX;
     public int enemyGridLocationY;
 
@@ -83,6 +84,8 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        callMiniNexus = FindObjectOfType<LevelManager>();
+
         collisionToVisionDelay = false;
 
         Physics2D.queriesStartInColliders = false;
@@ -688,7 +691,10 @@ public class EnemyController : MonoBehaviour
             }else
             {
                 //Debug.Log("Ouch! The Enemy Hit you!");
+                Destroy(FindObjectOfType<HideNodeManager>(), 0f);
                 other.gameObject.SetActive(false);
+                callMiniNexus.playerLiving = false;
+
             }
 
         }
@@ -770,6 +776,10 @@ public class EnemyController : MonoBehaviour
 
         
     }
+
+
+
+
 
     //limits when enemy can change block direction and controls block aim
 

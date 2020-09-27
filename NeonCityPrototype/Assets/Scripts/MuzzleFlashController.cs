@@ -8,11 +8,12 @@ public class MuzzleFlashController : MonoBehaviour
     public GameObject muzzleFlash;
     public GameObject bullet;
     private bool cooling;
+    private bool captured;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        captured = false;
     }
 
     // Update is called once per frame
@@ -22,7 +23,7 @@ public class MuzzleFlashController : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player" && cooling == false)
+        if (other.gameObject.tag == "Player" && cooling == false && captured == false)
         {
 
             cooling = true;

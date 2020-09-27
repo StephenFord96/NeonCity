@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
+    private LevelManager missionData;
     private EnemyController enemy;
     private RoomSpawner sendData;
     private DoorManager manageDoors;
@@ -382,8 +383,9 @@ public class LevelGenerator : MonoBehaviour
             lockedDoors[0, 1] = objectiveLocationY;
         }
 
+        missionData = FindObjectOfType<LevelManager>();
 
-        Instantiate(missionObjectives[Random.Range(0, 3)], new Vector3(objectiveLocationX * 9.85f -9.85f, objectiveLocationY * 3.96f -5.52f, 0f), transform.rotation);
+        Instantiate(missionObjectives[missionData.missionGoal], new Vector3(objectiveLocationX * 9.85f -9.85f, objectiveLocationY * 3.96f -5.52f, 0f), transform.rotation);
         objectiveLocated = true;
 
         
