@@ -52,6 +52,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -104,12 +106,15 @@ MonoBehaviour:
   enemyGridLocationY: 0
   pGridLocationX: 0
   pGridLocationY: 0
+  destinationX: 0
+  destinationY: 0
   enemyInDeadZone: 0
-  playerInDeadZone: 0
+  destinationInDeadZone: 0
   barrierLayout: 
   normalStairsLayout: 
   deadZoneStairsLayout: 
   levelDataLoaded: 0
+  onPatrol: 0
   playerSpotted: 0
   isStrangled: 0
   isDead: 0
@@ -148,6 +153,7 @@ MonoBehaviour:
   trueRange: 0
   playerStunned: 0
   playerBlockBlip: 0
+  collisionToVisionDelay: 0
 --- !u!61 &1247132271761245047
 BoxCollider2D:
   m_ObjectHideFlags: 0

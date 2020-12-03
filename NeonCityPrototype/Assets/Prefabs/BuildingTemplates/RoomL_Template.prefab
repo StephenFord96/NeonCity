@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6410763446919921292}
   - component: {fileID: 6410763446919921293}
   - component: {fileID: 6410763446919921294}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: RoomL_Template
   m_TagString: BuildingTemplate
   m_Icon: {fileID: 0}
@@ -48,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4289863204969450708}
   - component: {fileID: 4289863204969450710}
   - component: {fileID: 7230597741353749880}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: DoorRight
   m_TagString: Door
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3697663475581779430}
   - component: {fileID: 3921946154062829749}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}

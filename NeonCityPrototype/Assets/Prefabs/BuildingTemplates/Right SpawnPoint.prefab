@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3688333811148654633}
   - component: {fileID: 4480168591834254061}
   - component: {fileID: 624523562391386746}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Right SpawnPoint
   m_TagString: HorizontalSpawner
   m_Icon: {fileID: 0}
@@ -50,6 +50,8 @@ MonoBehaviour:
   currentHeightCount: 0
   identityRightLeft: 0
   spawnBarrier: 0
+  currentCoordinates: 0000000000000000
+  barrierLocations: 
   RoomRL: {fileID: 8105407179704971129, guid: 861fa647410a0d04f855cc013f34209f, type: 3}
   RoomR: {fileID: 9043227732916098538, guid: 8d3cb52e04222434bb240a8501eb1514, type: 3}
   RoomL: {fileID: 6410763446919921288, guid: 57bdf7133880a59488a8944921984b4a, type: 3}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2683149296467119729}
   - component: {fileID: 6207723541389249348}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Door Slot Right
   m_TagString: Door Slot
   m_Icon: {fileID: 0}

@@ -39,9 +39,9 @@ TagManager:
   - 
   - 
   - player
-  - BlocksVision
-  - 
-  - 
+  - Enemy
+  - Building
+  - Void
   - 
   - 
   - 

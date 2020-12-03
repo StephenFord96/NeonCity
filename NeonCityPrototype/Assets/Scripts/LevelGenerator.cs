@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
+    private TetherController tetherCall;
     private LevelManager missionData;
     private EnemyController enemy;
     private RoomSpawner sendData;
@@ -30,6 +31,7 @@ public class LevelGenerator : MonoBehaviour
     public int objectiveLocationX;
     public int objectiveLocationY;
     private bool objectiveLocated;
+    private bool objectiveSearching;
 
     //public int lockedDoorX;
     //public int lockedDoorY;
@@ -53,6 +55,20 @@ public class LevelGenerator : MonoBehaviour
     public int deadStairsTicker;
 
     List<object> aliveGuards = new List<object>();
+
+    public List<int> importantRoomsX = new List<int>(0);
+    public List<int> importantRoomsY = new List<int>(0);
+
+    public GameObject[] guardTether;
+
+    public GameObject gTether;
+    private int rand;
+
+    public List<int> guardTetherX = new List<int>(0);
+    public List<int> guardTetherY = new List<int>(0);
+
+    private int gTetherX;
+    private int gTetherY;
 
     public int playerHackPoints;
     public int maxTerminals;
@@ -105,12 +121,14 @@ public class LevelGenerator : MonoBehaviour
 
         hideSlotsDone = false;
 
+        //amount of guard tethers is based off of the height of the building and terminals present
+        guardTether = new GameObject[Mathf.RoundToInt((buildingHeight + maxTerminals) / 2)];
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
 
 
         //initiates after a cake layer is done and starts the next one
@@ -172,10 +190,16 @@ public class LevelGenerator : MonoBehaviour
                 if (normalStairsUp[stairGenTicker] != normalStairsUp[stairGenTicker - 1] && (normalStairsUp[stairGenTicker] <= barrierLocations[stairGenTicker+1] || barrierLocations[stairGenTicker+1] == 0))
                 {
                     Instantiate(stairsUp, new Vector3(normalStairsUp[stairGenTicker] * 9.85f - 9.85f, ((stairGenTicker - 1) * 3.96f) - (0.835f), transform.position.z), transform.rotation);
-                    
 
+                    //adds stairs to important room list
+                    importantRoomsX.Add(normalStairsUp[stairGenTicker]);
+                    importantRoomsY.Add(stairGenTicker);
+
+                    /*
                     Instantiate(enemyRed, new Vector3(normalStairsUp[stairGenTicker] * 9.85f - 9.85f, ((stairGenTicker - 1) * 3.96f) - (1.3f), transform.position.z), transform.rotation);
                     guardCount = guardCount + 1;
+                    */
+
                     stairGenTicker = stairGenTicker + 1;
 
                 }
@@ -187,10 +211,16 @@ public class LevelGenerator : MonoBehaviour
                 if (normalStairsUp[stairGenTicker] != normalStairsUp[stairGenTicker - 1] && (normalStairsUp[stairGenTicker] <= barrierLocations[stairGenTicker + 1] || barrierLocations[stairGenTicker + 1] == 0))
                 {
                     Instantiate(stairsUp, new Vector3(normalStairsUp[stairGenTicker] * 9.85f - 9.85f, ((stairGenTicker - 1) * 3.96f) - (0.835f), transform.position.z), transform.rotation);
-                    
 
+                    //adds stairs to important room list
+                    importantRoomsX.Add(normalStairsUp[stairGenTicker]);
+                    importantRoomsY.Add(stairGenTicker);
+
+                    /*
                     Instantiate(enemyRed, new Vector3(normalStairsUp[stairGenTicker] * 9.85f - 9.85f, ((stairGenTicker - 1) * 3.96f) - (1.3f), transform.position.z), transform.rotation);
                     guardCount = guardCount + 1;
+                    */
+
                     stairGenTicker = stairGenTicker + 1;
                 }
             }
@@ -216,6 +246,11 @@ public class LevelGenerator : MonoBehaviour
                     if (deadZoneStairs[deadStairsTicker] != normalStairsUp[deadStairsTicker + 1] && deadZoneStairs[deadStairsTicker] != deadZoneStairs[deadStairsTicker - 1])
                     {
                         Instantiate(stairsUp, new Vector3(deadZoneStairs[deadStairsTicker] * 9.85f - 9.85f, ((deadStairsTicker - 1) * 3.96f) - (0.835f), transform.position.z), transform.rotation);
+
+                        //adds stairs to important room list
+                        importantRoomsX.Add(deadZoneStairs[deadStairsTicker]);
+                        importantRoomsY.Add(deadStairsTicker);
+
                         deadStairsTicker = deadStairsTicker + 1;
                     }
                     else
@@ -232,19 +267,15 @@ public class LevelGenerator : MonoBehaviour
             
         }
         
+        
 
-        //enemyspawnsequence only starts after normal and dead stairs gen is complete
-        while (roomGenStatus == true && stairGenTicker == buildingHeight && deadStairsTicker >= buildingHeight && maxGuards > guardCount)
+        //checks to see if we can place the objective
+        if (roomGenStatus == true && stairGenTicker == buildingHeight && deadStairsTicker >= buildingHeight && objectiveSearching == false)
         {
-
-            Instantiate(enemyRed, new Vector3(9.85f * Random.Range(2,buildingWidth), (3.96f * Random.Range(1,buildingHeight)) - 1.3f, transform.position.z), transform.rotation);
-
-            guardCount = guardCount + 1;
-
-
-            
-
+            Invoke("objectiveLocater", 0f);
         }
+
+        
 
 
 
@@ -295,7 +326,7 @@ public class LevelGenerator : MonoBehaviour
 
 
             //go to obj sequence
-            Invoke("objectiveLocater", 0f);
+            //Invoke("objectiveLocater", 0f);
 
 
         }
@@ -310,6 +341,8 @@ public class LevelGenerator : MonoBehaviour
 
     private void objectiveLocater()
     {
+        objectiveSearching = true;
+
         //for loop only set to check top 3 floors
         for (int floorCheck = buildingHeight; floorCheck > buildingHeight-3; floorCheck--)
         {
@@ -383,9 +416,17 @@ public class LevelGenerator : MonoBehaviour
             lockedDoors[0, 1] = objectiveLocationY;
         }
 
+        //refrence bar area and pull the generated information IE brief case color etc
         missionData = FindObjectOfType<LevelManager>();
 
         Instantiate(missionObjectives[missionData.missionGoal], new Vector3(objectiveLocationX * 9.85f -9.85f, objectiveLocationY * 3.96f -5.52f, 0f), transform.rotation);
+
+        //adds objective to important room list
+        importantRoomsX.Add(objectiveLocationX);
+        importantRoomsY.Add(objectiveLocationY);
+
+        
+
         objectiveLocated = true;
 
         
@@ -395,7 +436,88 @@ public class LevelGenerator : MonoBehaviour
 
     }
 
+    public void spawnTethers()
+    {
+        for (int i = 0; i < guardTether.Length; i++)
+        {
+            //randomlly assign tether location
+            gTetherX = Random.Range(1, buildingWidth+1);
+            gTetherY = Random.Range(1, buildingHeight+1);
 
+            //a tether cannot spawn where an important room is
+            for (int ticker = 0; ticker < importantRoomsX.Count; ticker++)
+            {
+                if (gTetherX == importantRoomsX[ticker] && gTetherY ==importantRoomsY[ticker])
+                {
+                    gTetherX = 0;
+                    gTetherY = 0;
+                    break;
+                }
+                
+            }
+
+            //a tether cannot spawn where a tether already is
+            for (int tick = 0; tick < guardTetherX.Count; tick++)
+            {
+                if(gTetherX == guardTetherX[tick] && gTetherY == guardTetherY[tick])
+                {
+                    gTetherX = 0;
+                    gTetherY = 0;
+                    break;
+                }
+            }
+
+            //a tether cannot be too close to another tether
+            for (int ticker = 0; ticker < guardTetherX.Count; ticker++)
+            {
+                if (Mathf.Pow(2, Mathf.Abs(gTetherX-guardTetherX[ticker])) + Mathf.Pow(2, Mathf.Abs(gTetherY - guardTetherY[ticker])) < 4)
+                {
+                    gTetherX = 0;
+                    gTetherY = 0;
+                    break;
+                }
+            }
+
+            //if the random spot is already nullified or the starting room (1,1) then restart process
+            //bellow in the else function is where we actually spawn the tether
+            if ((gTetherY == 0 && gTetherX == 0) || (gTetherY == 1 && gTetherX == 1))
+            {
+                i = i - 1;
+                gTetherX = 0;
+                gTetherY = 0;
+            }
+            else
+            {
+                guardTetherX.Add(gTetherX);
+                guardTetherY.Add(gTetherY);
+                GameObject t = Instantiate(gTether, new Vector3((gTetherX * 9.85f)-9.85f, (gTetherY * 3.96f)-3.96f, 0f), transform.rotation);
+                guardTether[i] = t.gameObject;
+                tetherCall = t.gameObject.GetComponent<TetherController>();
+                tetherCall.positionX = gTetherX;
+                tetherCall.positionY = gTetherY;
+
+            }
+        }
+
+        //this portion dishes out HQ's to guard tether game objects that were previously recorded in the method
+        for (int i = 0; i <= guardTether.Length - 1; i++)
+        {
+
+            tetherCall = guardTether[i].gameObject.GetComponent<TetherController>();
+            rand = Random.Range(1, importantRoomsX.Count);
+
+            tetherCall.xHQ = importantRoomsX[rand];
+            tetherCall.yHQ = importantRoomsY[rand];
+
+            //remove the selected HQ from the important room pool to prevent overlap
+            importantRoomsX.RemoveAt(rand);
+            importantRoomsY.RemoveAt(rand);
+
+        }
+
+        maxGuards = guardTether.Length * 4;
+
+    }
 
     //alarm system/notification
     public void guardsAlert()
@@ -446,6 +568,7 @@ public class LevelGenerator : MonoBehaviour
                 manageTerminalSlots.spawnTerminals();
             }
             Invoke("spawnDoors", 0f);
+            Invoke("spawnTethers", 1f);
             Invoke("spawnPlayer", 0.5f);
         }
         else

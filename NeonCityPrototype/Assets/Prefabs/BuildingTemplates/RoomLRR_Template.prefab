@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8105407179704971130}
   - component: {fileID: 8105407179704971132}
   - component: {fileID: 8105407179704971133}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: RoomLRR_Template
   m_TagString: BuildingTemplate
   m_Icon: {fileID: 0}
@@ -49,6 +49,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -143,16 +145,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8105407179704971131}
     m_Modifications:
-    - target: {fileID: 3688333811148654634, guid: 1a35335788dea364ea4b2795a4daf706,
-        type: 3}
-      propertyPath: m_Name
-      value: Right SpawnPoint
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688333811148654634, guid: 1a35335788dea364ea4b2795a4daf706,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 3688333811148654633, guid: 1a35335788dea364ea4b2795a4daf706,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -208,6 +200,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3688333811148654634, guid: 1a35335788dea364ea4b2795a4daf706,
+        type: 3}
+      propertyPath: m_Name
+      value: Right SpawnPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688333811148654634, guid: 1a35335788dea364ea4b2795a4daf706,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4480168591834254061, guid: 1a35335788dea364ea4b2795a4daf706,
         type: 3}
       propertyPath: RoomRL
@@ -232,6 +234,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Door Slot Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141001365586202390, guid: 91ca07149a430f244b9baedb7e6973ec,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2683149296467119729, guid: 91ca07149a430f244b9baedb7e6973ec,
         type: 3}

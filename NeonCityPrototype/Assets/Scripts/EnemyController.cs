@@ -28,6 +28,7 @@ public class EnemyController : MonoBehaviour
     public bool levelDataLoaded;
 
     public bool onPatrol;
+    public bool isStatic;
     public bool playerSpotted;
     public bool isStrangled;
     public bool isDead;
@@ -46,7 +47,6 @@ public class EnemyController : MonoBehaviour
     public GameObject spottedEffect;
     public bool playerInSight;
     public bool spottedEffectVerrified;
-    public LayerMask maskForVision;
 
     //this helps split up frames and prevent attack loops
     public bool attackDone;
@@ -54,8 +54,11 @@ public class EnemyController : MonoBehaviour
     public bool dataAggresiveHits;
 
 
-    
-    
+    //tether and HQ data
+    public int xHQ;
+    public int yHQ;
+    public int xTether;
+    public int yTether;
 
 
 
@@ -113,6 +116,8 @@ public class EnemyController : MonoBehaviour
         playerInSight = false;
         spottedEffectVerrified = false;
         isDead = false;
+
+        isStatic = false;
 
         destinationX = 0;
         destinationY = 0;
@@ -183,7 +188,7 @@ public class EnemyController : MonoBehaviour
 
         RaycastHit2D highBeam = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.5f), transform.right, enemySightDistance);
 
-        RaycastHit2D hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), transform.right, enemySightDistance, maskForVision);
+        RaycastHit2D hitInfo = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), transform.right, enemySightDistance);
 
         if (highBeam.collider != null)
         {
@@ -485,7 +490,7 @@ public class EnemyController : MonoBehaviour
 
 
             //attacking portion
-            if (trueRange < 1f)
+            if (trueRange < 1f && playerSpotted == true)
             {
                 if (playerStunned == true && dataFollowUpAttack == false)
                 {
@@ -543,12 +548,28 @@ public class EnemyController : MonoBehaviour
             else { dataLR = true; }
            */
 
+            //halves move speed if patrolling instead of searching/alert
+            if(onPatrol == true)
+            {
+                enemyMoveSpeed = 3f * (difficulty / 20);
+                gameObject.layer = 11;
+            }
+            if(onPatrol == false)
+            {
+                gameObject.layer = 9;
+            }
+
         }
         
 
+
+
+
         //patrolling AI
 
-        if (playerSpotted == false && isStrangled == false && dataBlocking == false)
+        //**OUTDATED**
+
+        /*if (playerSpotted == false && isStrangled == false && dataBlocking == false)
         {
             enemyMoving = true;
             
@@ -579,7 +600,7 @@ public class EnemyController : MonoBehaviour
                 enemyRigidBody.velocity = new Vector2(-1f * enemyMoveSpeed / 2, 0f);
             }
 
-        }
+        }*/
 
 
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2712330015750902558}
   - component: {fileID: 6356524124879611027}
   - component: {fileID: 1060768293524498591}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Left SpawnPoint
   m_TagString: HorizontalSpawner
   m_Icon: {fileID: 0}
@@ -46,14 +46,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingWidth: 0
   buildingHeight: 0
+  currentFloorRoomCount: 0
+  currentHeightCount: 0
   identityRightLeft: 0
   spawnBarrier: 0
+  currentCoordinates: 0000000000000000
+  barrierLocations: 
   RoomRL: {fileID: 8944534157256234928, guid: 785ee49c96825f649b618ca096a72c07, type: 3}
   RoomR: {fileID: 9043227732916098538, guid: 8d3cb52e04222434bb240a8501eb1514, type: 3}
   RoomL: {fileID: 6410763446919921288, guid: 57bdf7133880a59488a8944921984b4a, type: 3}
+  BlockRoomL: {fileID: 0}
   landingZone: {x: 0, y: 0, z: 0}
   spawned: 0
-  timesThisNodeSpawnedARoom: 0
 --- !u!61 &1060768293524498591
 BoxCollider2D:
   m_ObjectHideFlags: 0

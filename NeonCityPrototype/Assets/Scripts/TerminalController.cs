@@ -53,6 +53,9 @@ public class TerminalController : MonoBehaviour
 
         nexus = FindObjectOfType<LevelGenerator>();
 
+        nexus.importantRoomsX.Add(terminalGridLocationX);
+        nexus.importantRoomsY.Add(terminalGridLocationY);
+
         //localSlideCount = 3;
 
         anim = GetComponent<Animator>();
