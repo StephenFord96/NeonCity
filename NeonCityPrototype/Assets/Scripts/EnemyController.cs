@@ -554,7 +554,7 @@ public class EnemyController : MonoBehaviour
            */
 
             //halves move speed if patrolling instead of searching/alert
-            if(onPatrol == true)
+            if(onPatrol == true && playerSpotted == false && playerInSight == false)
             {
                 enemyMoveSpeed = 3f * (difficulty / 20);
                 gameObject.layer = 11;
@@ -563,77 +563,84 @@ public class EnemyController : MonoBehaviour
             {
                 gameObject.layer = 9;
             }
+            if(playerInSight == true || playerSpotted == true)
+            {
+                enemyMoveSpeed = 3f * (difficulty / 10);
+            }
 
         }
-        
+
 
         //HQ and Tether Management
-        
-        //final calibration for a guard to place themself in a tether room
-        if(enemyGridLocationX == xTether && enemyGridLocationY == yTether && destinationX == xTether && destinationY == yTether)
+
+        if (playerInSight == false && playerSpotted == false)
         {
 
-            if (gameObject.transform.position.x > ((xTether - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
+            //final calibration for a guard to place themself in a tether room
+            if (enemyGridLocationX == xTether && enemyGridLocationY == yTether && destinationX == xTether && destinationY == yTether)
             {
-                enemyMoving = true;
-                dataLR = false;
-                enemyRigidBody.velocity = new Vector2(-1f * enemyMoveSpeed, 0f);
-            }
 
-            if (gameObject.transform.position.x < ((xTether - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
-            {
-                enemyMoving = true;
-                dataLR = true;
-                enemyRigidBody.velocity = new Vector2(1f * enemyMoveSpeed, 0f);
-            }
-
-            if (Mathf.Abs(gameObject.transform.position.x - (((xTether - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5))) <= 0.50f)
-            {
-                if (guardStatic == false)
+                if (gameObject.transform.position.x > ((xTether - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
                 {
-                    callTether.GuardInPosition(squadID, 0);
+                    enemyMoving = true;
+                    dataLR = false;
+                    enemyRigidBody.velocity = new Vector2(-1f * enemyMoveSpeed, 0f);
                 }
-                guardStatic = true;
-                enemyMoving = false;
-                enemyRigidBody.velocity = new Vector2(0f, 0f);
-                onPatrol = false;
-            }
-            else { guardStatic = false; onPatrol = true; }
-        }
 
-        //final calibration for guards to place themselves inside an HQ room
-        if (enemyGridLocationX == xHQ && enemyGridLocationY == yHQ && destinationX == xHQ && destinationY == yHQ)
-        {
-
-            if (gameObject.transform.position.x > ((xHQ - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
-            {
-                enemyMoving = true;
-                dataLR = false;
-                enemyRigidBody.velocity = new Vector2(-1f * enemyMoveSpeed, 0f);
-            }
-
-            if (gameObject.transform.position.x < ((xHQ - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
-            {
-                enemyMoving = true;
-                dataLR = true;
-                enemyRigidBody.velocity = new Vector2(1f * enemyMoveSpeed, 0f);
-            }
-
-            if (Mathf.Abs(gameObject.transform.position.x - (((xHQ - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5))) <= 0.50f)
-            {
-                if (guardStatic == false)
+                if (gameObject.transform.position.x < ((xTether - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
                 {
-                    callTether.GuardInPosition(squadID, 1);
+                    enemyMoving = true;
+                    dataLR = true;
+                    enemyRigidBody.velocity = new Vector2(1f * enemyMoveSpeed, 0f);
                 }
-                guardStatic = true;
-                enemyMoving = false;
-                enemyRigidBody.velocity = new Vector2(0f, 0f);
-                onPatrol = false;
+
+                if (Mathf.Abs(gameObject.transform.position.x - (((xTether - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5))) <= 0.50f)
+                {
+                    if (guardStatic == false)
+                    {
+                        callTether.GuardInPosition(squadID, 0);
+                    }
+                    guardStatic = true;
+                    enemyMoving = false;
+                    enemyRigidBody.velocity = new Vector2(0f, 0f);
+                    onPatrol = false;
+                }
+                else { guardStatic = false; onPatrol = true; }
             }
-            else { guardStatic = false; onPatrol = true; }
+
+            //final calibration for guards to place themselves inside an HQ room
+            if (enemyGridLocationX == xHQ && enemyGridLocationY == yHQ && destinationX == xHQ && destinationY == yHQ)
+            {
+
+                if (gameObject.transform.position.x > ((xHQ - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
+                {
+                    enemyMoving = true;
+                    dataLR = false;
+                    enemyRigidBody.velocity = new Vector2(-1f * enemyMoveSpeed, 0f);
+                }
+
+                if (gameObject.transform.position.x < ((xHQ - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
+                {
+                    enemyMoving = true;
+                    dataLR = true;
+                    enemyRigidBody.velocity = new Vector2(1f * enemyMoveSpeed, 0f);
+                }
+
+                if (Mathf.Abs(gameObject.transform.position.x - (((xHQ - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5))) <= 0.50f)
+                {
+                    if (guardStatic == false)
+                    {
+                        callTether.GuardInPosition(squadID, 1);
+                    }
+                    guardStatic = true;
+                    enemyMoving = false;
+                    enemyRigidBody.velocity = new Vector2(0f, 0f);
+                    onPatrol = false;
+                }
+                else { guardStatic = false; onPatrol = true; }
+            }
+
         }
-
-
         //patrolling AI
 
         //**OUTDATED**

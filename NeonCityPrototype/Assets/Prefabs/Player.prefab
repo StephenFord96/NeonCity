@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6382192435384835527}
   - component: {fileID: 6382192435384835526}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: BluePulse_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6382192435825091808}
   - component: {fileID: 6382192435825091743}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: BluePulse_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6382192435938096603}
   - component: {fileID: 6382192435938096602}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: BluePulse_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 6382192436043309227}
   - component: {fileID: 6638743991198331951}
   - component: {fileID: 5862124958132278040}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -483,7 +483,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6382192436226543078}
   - component: {fileID: 6382192436226543077}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: BluePulse_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6382192436295883914}
   - component: {fileID: 6382192436295883913}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: BluePulse_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -647,7 +647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6382192436417651233}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: PlayerEffects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +684,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6382192436809858749}
   - component: {fileID: 6382192436809858748}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: BluePulse_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -767,7 +767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2842878943672915042}
   - component: {fileID: 1546566606206762721}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: HitRegister
   m_TagString: Untagged
   m_Icon: {fileID: 0}
