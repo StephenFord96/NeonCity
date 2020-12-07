@@ -7,7 +7,8 @@ public class EnemyController : MonoBehaviour
     private Animator enemyAnim;
     private Rigidbody2D enemyRigidBody;
 
-
+    private TetherController callTether;
+    public GameObject myTether;
     private LevelGenerator callNexus;
     private LevelManager callMiniNexus;
     public int enemyGridLocationX;
@@ -59,6 +60,8 @@ public class EnemyController : MonoBehaviour
     public int yHQ;
     public int xTether;
     public int yTether;
+    public int squadID;
+    public bool guardStatic;
 
 
 
@@ -88,6 +91,8 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         callMiniNexus = FindObjectOfType<LevelManager>();
+
+        callTether = myTether.GetComponent<TetherController>();
 
         collisionToVisionDelay = false;
 
@@ -119,8 +124,8 @@ public class EnemyController : MonoBehaviour
 
         isStatic = false;
 
-        destinationX = 0;
-        destinationY = 0;
+        destinationX = xTether;
+        destinationY = yTether;
 
         //adds enemy to the list of living guards upon startup
         callNexus = FindObjectOfType<LevelGenerator>();
@@ -562,7 +567,71 @@ public class EnemyController : MonoBehaviour
         }
         
 
+        //HQ and Tether Management
+        
+        //final calibration for a guard to place themself in a tether room
+        if(enemyGridLocationX == xTether && enemyGridLocationY == yTether && destinationX == xTether && destinationY == yTether)
+        {
 
+            if (gameObject.transform.position.x > ((xTether - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
+            {
+                enemyMoving = true;
+                dataLR = false;
+                enemyRigidBody.velocity = new Vector2(-1f * enemyMoveSpeed, 0f);
+            }
+
+            if (gameObject.transform.position.x < ((xTether - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
+            {
+                enemyMoving = true;
+                dataLR = true;
+                enemyRigidBody.velocity = new Vector2(1f * enemyMoveSpeed, 0f);
+            }
+
+            if (Mathf.Abs(gameObject.transform.position.x - (((xTether - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5))) <= 0.50f)
+            {
+                if (guardStatic == false)
+                {
+                    callTether.GuardInPosition(squadID, 0);
+                }
+                guardStatic = true;
+                enemyMoving = false;
+                enemyRigidBody.velocity = new Vector2(0f, 0f);
+                onPatrol = false;
+            }
+            else { guardStatic = false; onPatrol = true; }
+        }
+
+        //final calibration for guards to place themselves inside an HQ room
+        if (enemyGridLocationX == xHQ && enemyGridLocationY == yHQ && destinationX == xHQ && destinationY == yHQ)
+        {
+
+            if (gameObject.transform.position.x > ((xHQ - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
+            {
+                enemyMoving = true;
+                dataLR = false;
+                enemyRigidBody.velocity = new Vector2(-1f * enemyMoveSpeed, 0f);
+            }
+
+            if (gameObject.transform.position.x < ((xHQ - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5) && guardStatic == false)
+            {
+                enemyMoving = true;
+                dataLR = true;
+                enemyRigidBody.velocity = new Vector2(1f * enemyMoveSpeed, 0f);
+            }
+
+            if (Mathf.Abs(gameObject.transform.position.x - (((xHQ - 1) * 9.85f) - 4.925f + ((9.85f * squadID) / 5))) <= 0.50f)
+            {
+                if (guardStatic == false)
+                {
+                    callTether.GuardInPosition(squadID, 1);
+                }
+                guardStatic = true;
+                enemyMoving = false;
+                enemyRigidBody.velocity = new Vector2(0f, 0f);
+                onPatrol = false;
+            }
+            else { guardStatic = false; onPatrol = true; }
+        }
 
 
         //patrolling AI
@@ -798,6 +867,20 @@ public class EnemyController : MonoBehaviour
         
     }
 
+
+    public void patrolHQ()
+    {
+        destinationX = xHQ;
+        destinationY = yHQ;
+        onPatrol = true;
+    }
+
+    public void patrolTether()
+    {
+        destinationX = xTether;
+        destinationY = yTether;
+        onPatrol = true;
+    }
 
 
 
