@@ -566,6 +566,7 @@ public class EnemyController : MonoBehaviour
             if(playerInSight == true || playerSpotted == true)
             {
                 enemyMoveSpeed = 3f * (difficulty / 10);
+                gameObject.layer = 9;
             }
 
         }
