@@ -78,6 +78,9 @@ TagManager:
   - name: player
     uniqueID: 2859784389
     locked: 0
+  - name: spotlights
+    uniqueID: 604764169
+    locked: 0
   - name: minigames
     uniqueID: 3759322105
     locked: 0

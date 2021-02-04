@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class TerminalController : MonoBehaviour
 {
+
     private LevelGenerator nexus;
     private Animator anim;
     private SecurityCameraController secCameraCall;
@@ -28,6 +30,16 @@ public class TerminalController : MonoBehaviour
     private int parseID;
     //private int localSlideCount;
 
+    public GameObject hackingGame;
+    public int dataCacheID;
+    public Folder[] allFolders;
+    public int oUsed;
+    public string[] adjectives = new string[15] { "red", "yellow", "green", "dark", "light", "heavy", "old", "new", "bad", "good", "outdated", "private", "public", "domain", "local"};
+    public string[] nouns = new string[15] { "admin", "data", "disk", "drive", "user", "system", "project", "document", "network", "net", "port", "desktop", "config", "readme", "base"};
+
+
+
+
     private int camX;
     private int camY;
     private int securityTicker;
@@ -45,6 +57,7 @@ public class TerminalController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         securityTicker = 0;
         parseID = 0;
 
@@ -106,8 +119,81 @@ public class TerminalController : MonoBehaviour
         trueCombination[1] = Random.Range(1, 12);
         trueCombination[2] = Random.Range(1, 12);
 
-        
+        oUsed = 0;
 
+
+
+        //this is the folder that will have the data cache
+        allFolders[Random.Range(13, 39)].storage = 1;
+        dataCacheID = Random.Range(100000, 999999);
+
+        //folder designator
+        for (int f = 0; f < 39; f++)
+        {
+            //first "folder" is main and has no parent
+            if (f == 0)
+            {
+                allFolders[f].name = ("Main");
+                allFolders[f].parentName = null;
+
+            }else if(f > 0)
+            {
+
+                //check every folder with a lower ID than myself
+                for (int p = 0; p < f; p++)
+                {
+                    bool done = false;
+
+                    //prompt each folder 3 times if it possesses a ownership ID that is the same as my folder ID
+                    for (int o = 0; o < 3; o++)
+                    {
+
+                        if (allFolders[p].ownership[o] == f)
+                        {
+                            //I know that the folder in question is my parent and I can pluck from it's children list what my own name is
+                            allFolders[f].parentName = allFolders[p].name;
+                            allFolders[f].name = allFolders[p].childrenName[o];
+
+                            done = true;
+                            break;
+                        }
+                    }
+                    if (done == true)
+                    {
+                        break;
+                    }
+                }
+            }
+
+
+            //children designator
+
+            if (f <= 12) 
+            {
+                allFolders[f].childrenName = new string[3];
+                allFolders[f].ownership = new int[3];
+
+                for (int c = 0; c < 3; c++)
+                {
+
+                    allFolders[f].childrenName[c] = adjectives[Random.Range(0,15)] + " " + nouns[Random.Range(0,15)];
+
+
+                    allFolders[f].ownership[c] = (oUsed + 1);
+                    oUsed = oUsed + 1;
+                }
+            } else if(f > 12)
+            {
+                //these are all the bottom folders and here we will determine if there is an anti malware or the data cache
+                if(allFolders[f].storage != 1)
+                {
+                    if((Random.Range(1,4)) >= 3)
+                    {
+                        allFolders[f].storage = 2;
+                    }
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -389,6 +475,10 @@ public class TerminalController : MonoBehaviour
 
     public void Hack()
     {
+
+        Instantiate(hackingGame, new Vector3(playerVision.gameObject.transform.position.x, playerVision.gameObject.transform.position.y, 0),playerVision.gameObject.transform.rotation);
+        
+
         playerHasControl = true;
         anim.SetBool("Hacked", true);
         playerPicking = false;
