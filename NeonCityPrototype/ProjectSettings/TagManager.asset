@@ -63,9 +63,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Background
     uniqueID: 1541346791
     locked: 0
@@ -86,6 +83,9 @@ TagManager:
     locked: 0
   - name: Effects and UI
     uniqueID: 3047691315
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Text
     uniqueID: 191922865

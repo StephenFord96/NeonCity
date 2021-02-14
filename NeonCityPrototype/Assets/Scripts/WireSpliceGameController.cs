@@ -260,7 +260,7 @@ public class WireSpliceGameController : MonoBehaviour
         {
             Debug.Log("You Win");
 
-            callTerminal.Hack();
+            callTerminal.Win();
 
             Cursor.visible = true;
 

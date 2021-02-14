@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 57440507
-  m_SortingLayer: 3
+  m_SortingLayer: -5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 34aeb738d321941408acc174b2b08f25, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -161,6 +161,7 @@ MonoBehaviour:
   - 0
   hackingGame: {fileID: 8506303745318929016, guid: a6bc7f745e763584da296ece4d7097c6,
     type: 3}
+  hackWindow: {fileID: 0}
   dataCacheID: 0
   allFolders:
   - name: 
@@ -358,6 +359,44 @@ MonoBehaviour:
     childrenName: []
     ownership: 
     storage: 0
+  - name: 
+    parentName: 
+    childrenName: []
+    ownership: 
+    storage: 0
   oUsed: 0
+  adjectives:
+  - red
+  - yellow
+  - green
+  - dark
+  - light
+  - heavy
+  - old
+  - new
+  - bad
+  - good
+  - outdated
+  - private
+  - public
+  - domain
+  - local
+  nouns:
+  - admin
+  - data
+  - disk
+  - drive
+  - user
+  - system
+  - project
+  - document
+  - network
+  - net
+  - port
+  - desktop
+  - config
+  - readme
+  - base
+  playerHacking: 0
   playerVision: {fileID: 0}
   allSecurityItems: []

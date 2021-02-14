@@ -31,12 +31,13 @@ public class TerminalController : MonoBehaviour
     //private int localSlideCount;
 
     public GameObject hackingGame;
+    public GameObject hackWindow;
     public int dataCacheID;
     public Folder[] allFolders;
     public int oUsed;
     public string[] adjectives = new string[15] { "red", "yellow", "green", "dark", "light", "heavy", "old", "new", "bad", "good", "outdated", "private", "public", "domain", "local"};
     public string[] nouns = new string[15] { "admin", "data", "disk", "drive", "user", "system", "project", "document", "network", "net", "port", "desktop", "config", "readme", "base"};
-
+    public bool playerHacking;
 
 
 
@@ -57,6 +58,8 @@ public class TerminalController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        playerHacking = false;
 
         securityTicker = 0;
         parseID = 0;
@@ -128,7 +131,7 @@ public class TerminalController : MonoBehaviour
         dataCacheID = Random.Range(100000, 999999);
 
         //folder designator
-        for (int f = 0; f < 39; f++)
+        for (int f = 0; f < 40; f++)
         {
             //first "folder" is main and has no parent
             if (f == 0)
@@ -176,8 +179,41 @@ public class TerminalController : MonoBehaviour
                 for (int c = 0; c < 3; c++)
                 {
 
-                    allFolders[f].childrenName[c] = adjectives[Random.Range(0,15)] + " " + nouns[Random.Range(0,15)];
+                    allFolders[f].childrenName[c] = "standby";
 
+                    //gives the children their names and prevents identical copies
+                    while (allFolders[f].childrenName[c] == "standby")
+                    {                                       
+
+                        allFolders[f].childrenName[c] = adjectives[Random.Range(0, 15)] + nouns[Random.Range(0, 15)];
+
+                        for (int p = 0; p < f; p++)
+                        {
+                            if(allFolders[p].name == allFolders[f].childrenName[c])
+                            {
+                                allFolders[f].childrenName[c] = "standby";
+                                break;
+                            }
+
+                            for (int cc = 0; cc < 3; cc++)
+                            {
+                                if(allFolders[p].childrenName[cc] == allFolders[f].childrenName[c])
+                                {
+                                    if (f != p && c != cc)
+                                    {
+                                        allFolders[f].childrenName[c] = "standby";
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (allFolders[f].childrenName[c] == "standby")
+                            {
+                                break;
+                            }
+
+                        }
+                    }
 
                     allFolders[f].ownership[c] = (oUsed + 1);
                     oUsed = oUsed + 1;
@@ -244,7 +280,9 @@ public class TerminalController : MonoBehaviour
             //else { Debug.Log("Check Check"); }
         }
 
-        if (playerInRange == true && Input.GetKeyDown("e") && playerTalkingTo == false)
+        player = FindObjectOfType<PlayerController>();
+
+        if (playerInRange == true && Input.GetKeyDown("e") && playerTalkingTo == false && player.playerInteracting == false)
         {
             playerTalkingTo = true;
             player = FindObjectOfType<PlayerController>();
@@ -273,7 +311,7 @@ public class TerminalController : MonoBehaviour
             if (playerHasControl == false)
             {
                 //block to pick terminal lock from UI
-                if (Input.GetKeyDown("1") && isOpen == false)
+                if (Input.GetKeyDown("1") && isOpen == false && playerHacking == false)
                 {
                     terminalMenu.ExitConversation();
                     playerTalkingTo = false;
@@ -287,17 +325,15 @@ public class TerminalController : MonoBehaviour
                 }
 
                 //block to Hack terminal from UI
-                if (Input.GetKeyDown("2"))
+                if (Input.GetKeyDown("2") && playerHacking == false)
                 {
+                    playerHacking = true;
                     //instantiate hacking minigame temporarilly insta wins
                     Invoke("Hack", 0f);
-                    terminalMenu.ExitConversation();
-                    playerTalkingTo = false;
-                    player.playerInteracting = false;
                 }
 
                 //block to splice wires from terminal UI
-                if (Input.GetKeyDown("1") && isOpen == true)
+                if (Input.GetKeyDown("1") && isOpen == true && playerHacking == false)
                 {
                     //instantiate wire splice minigame temporarily insta wins
                     playerPicking = true;
@@ -422,7 +458,7 @@ public class TerminalController : MonoBehaviour
             }
 
             //block to exit terminal UI
-            if (Input.GetKeyDown("3"))
+            if (Input.GetKeyDown("3") && playerHacking == false)
             {
                 terminalMenu.ExitConversation();
                 player.playerInteracting = false;
@@ -437,6 +473,10 @@ public class TerminalController : MonoBehaviour
             playerPicking = false;
         }
 
+        if (Input.GetKeyDown("escape"))
+        {
+            playerHacking = false;
+        }
 
     }
 
@@ -464,26 +504,26 @@ public class TerminalController : MonoBehaviour
         player.playerInteracting = false;
     }
 
-    //pretty sure this is dead code
-    public void Splice()
+    //win condition function
+    public void Win()
     {
         playerHasControl = true;
         anim.SetBool("Hacked", true);
         playerPicking = false;
         player.playerInteracting = false;
+        playerHacking = false;
+        nexus.playerHackPoints = nexus.playerHackPoints + 3;
     }
 
     public void Hack()
     {
+        player = FindObjectOfType<PlayerController>();
 
-        Instantiate(hackingGame, new Vector3(playerVision.gameObject.transform.position.x, playerVision.gameObject.transform.position.y, 0),playerVision.gameObject.transform.rotation);
-        
+        hackWindow = Instantiate(hackingGame, new Vector3(playerVision.gameObject.transform.position.x, playerVision.gameObject.transform.position.y, 0),playerVision.gameObject.transform.rotation);
+        player.playerInteracting = true;
 
-        playerHasControl = true;
-        anim.SetBool("Hacked", true);
+
         playerPicking = false;
-        player.playerInteracting = false;
-        nexus.playerHackPoints = nexus.playerHackPoints + 3;
     }
 
     
