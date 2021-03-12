@@ -109,7 +109,7 @@ public class EnemyController : MonoBehaviour
         enemyMoving = false;
         isStrangled = false;
         difficulty = Random.Range(8f, 10f);
-        enemyMoveSpeed = 3f * (difficulty / 10);
+        enemyMoveSpeed = 3f * (9 / 10);
         enemySightDistance = 5f;
 
         playerLR = true;
@@ -770,36 +770,6 @@ public class EnemyController : MonoBehaviour
 
     //    !! HIT DETECTION !!    this is called when the enemys sword hits the player or when bodies collide
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.tag == "Player" && dataAttacking == true)
-        {
-            //Debug.Log("The Enemy Hits You!");
-
-        if (playerHL == dataHighLow && playerBlocking == true && playerLR != dataLR)
-            {
-                enemyStunned = true;
-                dataFollowUpAttack = false;
-                
-                //Debug.Log("Clink you block the enemy");
-
-                battleDataEnemy = FindObjectOfType<PlayerController>();
-                battleDataEnemy.blockSuccesCheck();
-
-            }else
-            {
-                //Debug.Log("Ouch! The Enemy Hit you!");
-                Destroy(FindObjectOfType<HideNodeManager>(), 0f);
-                other.gameObject.SetActive(false);
-                callMiniNexus.playerLiving = false;
-
-            }
-
-        }
-
-        
-        
-    }
 
 
     //fixes all AI collision issues and behaviour with each other
@@ -838,7 +808,32 @@ public class EnemyController : MonoBehaviour
 
         }
 
-        
+        if (other.gameObject.tag == "Player" && dataAttacking == true && dataDealingDamage == true)
+        {
+            //Debug.Log("The Enemy Hits You!");
+
+            if (playerHL == dataHighLow && playerBlocking == true && playerLR != dataLR)
+            {
+                enemyStunned = true;
+                dataFollowUpAttack = false;
+
+                //Debug.Log("Clink you block the enemy");
+
+                battleDataEnemy = FindObjectOfType<PlayerController>();
+                battleDataEnemy.blockSuccesCheck();
+
+            }
+            else
+            {
+                //Debug.Log("Ouch! The Enemy Hit you!");
+                Destroy(FindObjectOfType<HideNodeManager>(), 0f);
+                //other.gameObject.SetActive(false);
+                //callMiniNexus.playerLiving = false;
+                Debug.Log("YOU DIED");
+
+            }
+
+        }
 
 
     }

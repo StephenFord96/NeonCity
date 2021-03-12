@@ -234,7 +234,7 @@ public class HackingMiniGame : MonoBehaviour
             currentLine = currentLine - 1;
         }
 
-        for (int f = 0; f < 39; f++)
+        for (int f = 0; f < 40; f++)
         {
             if (terminal.allFolders[f].name == currentFolder)
             {
@@ -296,13 +296,27 @@ public class HackingMiniGame : MonoBehaviour
             currentLine = currentLine - 1;
         }
 
-        lines[currentLine].text = ("://SCANNING>>>  " + currentFolder);
-        currentLine = currentLine + 2;
 
-        for(int f = 0; f < 39; f++)
+        for(int f = 0; f < 40; f++)
         {
             if(terminal.allFolders[f].name == currentFolder && terminal.allFolders[f].childrenName.Length > 0)
             {
+                int d = 0;
+
+                if(f >= 1 && f <= 3)
+                {
+                    d = 1;
+                }else if(f >= 4 && f <= 12)
+                {
+                    d = 2;
+                }else if(f >= 13)
+                {
+                    d = 3;
+                }
+
+                lines[currentLine].text = ("://SCANNING>>>  " + currentFolder + " AT DEPTH " + d);
+                currentLine = currentLine + 2;
+
                 lines[currentLine].text = terminal.allFolders[f].childrenName[0];
                 currentLine = currentLine + 1;
                 lines[currentLine].text = terminal.allFolders[f].childrenName[1];
